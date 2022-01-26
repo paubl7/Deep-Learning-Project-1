@@ -6,11 +6,14 @@
 #### IMPORTS
 
 import os 
-import sys
 import argparse
 import matplotlib as plt
 import numpy as np
-from shape import shape
+from squareshape import squareshape
+from rectangleshape import rectangleshape
+from houseshape import houseshape
+from paralellinesshape import paralellinesshape
+from visualizator import visualizator
 
 class DataGenerator:
 
@@ -18,21 +21,57 @@ class DataGenerator:
         self.nimages= nimages
         self.size= size 
         self.noise = noise
-        self.flattening= flattening
-        self.rangeheight= [minheight, maxheight]
-        self.rangewidth= [minwidth, maxwidth]
+        self.flatten= flattening
+        self.hrange= [minheight, maxheight]
+        self.wrange= [minwidth, maxwidth]
         self.centered = centered
         self.trainingsize= trainingsize
         self.validationsize = validationsize
         self.testsize = trainingsize - validationsize
+        self.visual = visualizator
         
 
     #### PUBLIC FUNCTIONS ####
 
     ## Generates all the dataset
 
-    def dataSetGenerator(): 
-        pass
+    def dataSetGenerator(self): 
+        sqr= self.generateshapedata("square")
+        self.visual.visualize_data_from_generator(self.visual, sqr)
+
+        rect= self.generateshapedata("rectangle")
+        self.visual.visualize_data_from_generator(self.visual, rect)
+
+        print(sqr)
+        print(rect)
+
+
+    ## Generates one shape depending on which shape appears on the parameter
+    def generateshapedata(self, tshape):
+        if(tshape == "square"):
+            sqrshape = squareshape(self.size, self.flatten, self.hrange, 
+                                       self.wrange, self.centered)
+            square = sqrshape.generateshape()
+            return square
+        
+        if (tshape == "rectangle"):
+            rectshape = rectangleshape(self.size, self.flatten, self.hrange, 
+                                       self.wrange, self.centered)
+            rectangle = rectshape.generateshape()
+            return rectangle
+        
+        if (tshape == "house"):
+            housesh = houseshape(self.size, self.flatten, self.hrange, 
+                                       self.wrange, self.centered)
+            house= housesh.generateshape()
+            return house
+
+        if (tshape == "lines"):
+            lineshape = paralellinesshape(self.size, self.flatten, self.hrange, 
+                                       self.wrange, self.centered)
+            lines = lineshape.generateshape()
+            return lines
+
 
     #### PRIVATE FUNCTIONS ####
 
@@ -46,20 +85,10 @@ class DataGenerator:
         os.mkdir(dir_aux + dir_aux)
 
 
-    ## Function used to create the background of the image where the points will be distributed
-    def __matrixCreation(size):
-        matrix_aux=[]
-        for a in range(size):
-            aux= [False for i in range(size)]
-            matrix_aux.append(aux)
-        
-        return matrix_aux
-
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--nimages', default=250, type=int, help='Number of images that will be created')
-    parser.add_argument('--size', default= 20, type = int,  help='Size of the matrix (size*size)')
+    parser.add_argument('--size', default= 20, type = int,  help='Size of the matrix (size*size) -> Minimum:10 Maximum:50')
     parser.add_argument('--noise', default= 0.4, type = float,  help='Probability for a pixel to be outside the shape (between 0 and 1)')
     parser.add_argument('--flattening', default= 0, type = bool,  help='Option to pass the data flattened or in a matrix form (0-> flattened, 1-> Matrix)')
     parser.add_argument('--minheight', default= 4, type = int, help= "Minimum height of the shapes" )
@@ -74,5 +103,8 @@ if __name__ == '__main__':
 
     dataGenerator= DataGenerator(args.nimages, args.size, args.noise, args.flattening, args.minheight, 
     args.maxheight, args.minwidth, args.maxwidth, args.centered, args.trainingsize, args.validationsize)
-     
+    
+    dataGenerator.dataSetGenerator()
+
+
 
