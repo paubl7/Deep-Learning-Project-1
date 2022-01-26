@@ -9,7 +9,6 @@ class visualizator:
         pass
 
     def visualize_data_from_generator(self, matrix):
-        print("hello")
         plt.imshow(matrix, interpolation = 'nearest')
         plt.show()
 

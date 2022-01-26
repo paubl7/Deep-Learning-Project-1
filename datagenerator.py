@@ -40,34 +40,37 @@ class DataGenerator:
         self.visual.visualize_data_from_generator(self.visual, sqr)
 
         rect= self.generateshapedata("rectangle")
-        self.visual.visualize_data_from_generator(self.visual, rect)
+        #self.visual.visualize_data_from_generator(self.visual, rect)
 
-        print(sqr)
-        print(rect)
+        lines = self.generateshapedata("lines")
+        #self.visual.visualize_data_from_generator(self.visual, lines)
+        
+        house = self.generateshapedata("house")
+        #self.visual.visualize_data_from_generator(self.visual, house)
 
 
     ## Generates one shape depending on which shape appears on the parameter
     def generateshapedata(self, tshape):
         if(tshape == "square"):
-            sqrshape = squareshape(self.size, self.flatten, self.hrange, 
+            sqrshape = squareshape(self.size, self.noise, self.hrange, 
                                        self.wrange, self.centered)
             square = sqrshape.generateshape()
             return square
         
         if (tshape == "rectangle"):
-            rectshape = rectangleshape(self.size, self.flatten, self.hrange, 
+            rectshape = rectangleshape(self.size, self.noise, self.hrange, 
                                        self.wrange, self.centered)
             rectangle = rectshape.generateshape()
             return rectangle
         
         if (tshape == "house"):
-            housesh = houseshape(self.size, self.flatten, self.hrange, 
+            housesh = houseshape(self.size, self.noise, self.hrange, 
                                        self.wrange, self.centered)
             house= housesh.generateshape()
             return house
 
         if (tshape == "lines"):
-            lineshape = paralellinesshape(self.size, self.flatten, self.hrange, 
+            lineshape = paralellinesshape(self.size, self.noise, self.hrange, 
                                        self.wrange, self.centered)
             lines = lineshape.generateshape()
             return lines
@@ -89,7 +92,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--nimages', default=250, type=int, help='Number of images that will be created')
     parser.add_argument('--size', default= 20, type = int,  help='Size of the matrix (size*size) -> Minimum:10 Maximum:50')
-    parser.add_argument('--noise', default= 0.4, type = float,  help='Probability for a pixel to be outside the shape (between 0 and 1)')
+    parser.add_argument('--noise', default= 0.1, type = float,  help='Probability for a pixel to be outside the shape (between 0 and 1)')
     parser.add_argument('--flattening', default= 0, type = bool,  help='Option to pass the data flattened or in a matrix form (0-> flattened, 1-> Matrix)')
     parser.add_argument('--minheight', default= 4, type = int, help= "Minimum height of the shapes" )
     parser.add_argument('--maxheight', default= 10, type= int, help= "Maximum height of the shapes"  )

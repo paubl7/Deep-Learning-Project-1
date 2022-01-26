@@ -6,9 +6,9 @@ import numpy as np
 class rectangleshape:
     
     background=[]
-    def __init__(self, size, flattening, heightrange, widthrange, centered):
+    def __init__(self, size, noise, heightrange, widthrange, centered):
         self.background = np.zeros((size,size))
-        self.flattening= flattening 
+        self.noise= noise 
         self.hrange=heightrange 
         self.wrange= widthrange
         self.centered = centered
