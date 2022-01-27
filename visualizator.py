@@ -12,3 +12,6 @@ class visualizator:
         plt.imshow(matrix, interpolation = 'nearest')
         plt.show()
 
+    def save_data_from_generator(self,matrix,name):
+        plt.imshow(matrix, interpolation = 'nearest')
+        plt.savefig(name, bbox_inches='tight')

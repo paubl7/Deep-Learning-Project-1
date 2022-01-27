@@ -8,6 +8,7 @@
 import os 
 import argparse
 import matplotlib as plt
+from matplotlib.cbook import flatten
 import numpy as np
 from squareshape import squareshape
 from rectangleshape import rectangleshape
@@ -16,6 +17,8 @@ from paralellinesshape import paralellinesshape
 from visualizator import visualizator
 
 class DataGenerator:
+
+    dataSetDirectory = ""
 
     def __init__(self, nimages, size, noise, flattening, minheight, maxheight, minwidth, maxwidth, centered, trainingsize, validationsize):
         self.nimages= nimages
@@ -36,8 +39,9 @@ class DataGenerator:
     ## Generates all the dataset
 
     def dataSetGenerator(self): 
-        
+        self.__createDirectory()
         for i in range(0, self.nimages):
+            shape=[]
             if(i%4 == 0):
                 shape= self.generateshapedata("square")
             elif(i%4 == 1):
@@ -46,8 +50,8 @@ class DataGenerator:
                 shape = self.generateshapedata("lines")
             else:
                 shape = self.generateshapedata("house")
-
-            self.visual.visualize_data_from_generator(self.visual, shape)
+            self.__writedata(shape, i)
+            #self.visual.visualize_data_from_generator(self.visual, shape)
 
 
     ## Generates one shape depending on which shape appears on the parameter
@@ -80,13 +84,45 @@ class DataGenerator:
     #### PRIVATE FUNCTIONS ####
 
     ## Function to create a directory
-    def __createDirectory(dir_name):
+    def __createDirectory(self):
         dir_act= os.getcwd()
-        dir_aux = dir_act + "/" + dir_name
-        if (os.path.exists(dir_aux)):
-            os.rmdir(dir_aux)
+        dir_aux=os.path.join(dir_act,"dataset")
+        dir_aux_num = os.path.join(dir_act,"dataset0")
+        notcreated = True
+        i=0
+        while(notcreated):
+            if (not os.path.exists(dir_aux_num)):
+                self.dataSetDirectory = dir_aux_num
+                os.mkdir(dir_aux_num)
+                notcreated = False
+            
+            i = i+1
+            dir_aux_num = dir_aux + str(i)
+    
+    def __writedata(self, matrix, i):
+        filename = "shape"+str(i)
+        filepath = os.path.join(self.dataSetDirectory, filename)
+        file = open(filepath, "w+")
+        self.visual.save_data_from_generator(self.visual, matrix, filepath)
+        filepath = filepath + ".txt"
+        if(not self.flatten):
+            file.write(str(self.size))
+            file.write("\n")
+            matrixflat = flatten(matrix)
+            print(matrixflat)
+            for i in matrixflat:
+                file.write(str(i) + "")
+        
+        else:
+            for i in range(0,self.size):
+                if(not i == 0):
+                    file.write("\n")
+                for j in matrix[i]:
+                    file.write(str(j) + "")
+            
+        
 
-        os.mkdir(dir_aux + dir_aux)
+
 
 
 if __name__ == '__main__':

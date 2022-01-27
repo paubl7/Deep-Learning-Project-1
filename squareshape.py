@@ -10,7 +10,7 @@ class squareshape:
 
     background=[]
     def __init__(self, size, noise, heightrange, widthrange, centered):
-        self.background = np.zeros((size,size))
+        self.background = np.zeros((size,size),int)
         self.noise= noise
         self.hrange=heightrange 
         self.wrange= widthrange
