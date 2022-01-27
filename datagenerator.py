@@ -36,17 +36,18 @@ class DataGenerator:
     ## Generates all the dataset
 
     def dataSetGenerator(self): 
-        sqr= self.generateshapedata("square")
-        self.visual.visualize_data_from_generator(self.visual, sqr)
-
-        rect= self.generateshapedata("rectangle")
-        self.visual.visualize_data_from_generator(self.visual, rect)
-
-        lines = self.generateshapedata("lines")
-        self.visual.visualize_data_from_generator(self.visual, lines)
         
-        house = self.generateshapedata("house")
-        self.visual.visualize_data_from_generator(self.visual, house)
+        for i in range(0, self.nimages):
+            if(i%4 == 0):
+                shape= self.generateshapedata("square")
+            elif(i%4 == 1):
+                shape= self.generateshapedata("rectangle")
+            elif(i%4 == 2):
+                shape = self.generateshapedata("lines")
+            else:
+                shape = self.generateshapedata("house")
+
+            self.visual.visualize_data_from_generator(self.visual, shape)
 
 
     ## Generates one shape depending on which shape appears on the parameter
@@ -90,9 +91,9 @@ class DataGenerator:
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--nimages', default=250, type=int, help='Number of images that will be created')
+    parser.add_argument('--nimages', default=10, type=int, help='Number of images that will be created')
     parser.add_argument('--size', default= 20, type = int,  help='Size of the matrix (size*size) -> Minimum:10 Maximum:50')
-    parser.add_argument('--noise', default= 0.1, type = float,  help='Probability for a pixel to be outside the shape (between 0 and 1)')
+    parser.add_argument('--noise', default= 0.04, type = float,  help='Probability for a pixel to be outside the shape (between 0 and 1)')
     parser.add_argument('--flattening', default= 0, type = bool,  help='Option to pass the data flattened or in a matrix form (0-> flattened, 1-> Matrix)')
     parser.add_argument('--minheight', default= 4, type = int, help= "Minimum height of the shapes" )
     parser.add_argument('--maxheight', default= 10, type= int, help= "Maximum height of the shapes"  )

@@ -15,8 +15,8 @@ class houseshape:
         self.centered = centered
     
     def probability_noise(self):
-        random = randint(low= 0, high= 10)
-        if (random < self.noise*10):
+        random = np.random.uniform(0,1)
+        if (random < self.noise):
             return 1
         return 0
 
