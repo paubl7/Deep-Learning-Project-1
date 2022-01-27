@@ -40,13 +40,13 @@ class DataGenerator:
         self.visual.visualize_data_from_generator(self.visual, sqr)
 
         rect= self.generateshapedata("rectangle")
-        #self.visual.visualize_data_from_generator(self.visual, rect)
+        self.visual.visualize_data_from_generator(self.visual, rect)
 
         lines = self.generateshapedata("lines")
-        #self.visual.visualize_data_from_generator(self.visual, lines)
+        self.visual.visualize_data_from_generator(self.visual, lines)
         
         house = self.generateshapedata("house")
-        #self.visual.visualize_data_from_generator(self.visual, house)
+        self.visual.visualize_data_from_generator(self.visual, house)
 
 
     ## Generates one shape depending on which shape appears on the parameter

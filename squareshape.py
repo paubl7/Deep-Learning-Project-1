@@ -16,8 +16,8 @@ class squareshape:
         self.centered = centered
 
     def probability_noise(self):
-        random = randint(low= 1, high= 10)
-        if (random <= self.noise*10):
+        random = randint(low= 0, high= 10)
+        if (random < self.noise*10):
             return 1
         return 0
     
@@ -79,39 +79,44 @@ class squareshape:
         # High line 
         i = 0
         while(i < sideMeasure):
-            if(self.probability_noise() == 1):
-                self.random_point(size, self.background)
-            else:
-                self.background[pointx][pointy] = 1
-                pointy = pointy + 1
+            if (self.background[pointx][pointy] == 0):
+                if(self.probability_noise() == 1 ):
+                    self.random_point(size, self.background)
+                else:
+                    self.background[pointx][pointy] = 1
+            pointy = pointy + 1
             i += 1           
 
         #Right side line
         i = 0
         while(i < sideMeasure):
-            if(self.probability_noise() == 1):
-                self.random_point(size, self.background)
-            else:
-                self.background[pointx][pointy] = 1
-                pointx = pointx + 1
+            if (self.background[pointx][pointy] == 0):
+                if(self.probability_noise() == 1):
+                    self.random_point(size, self.background)
+                else:
+                    self.background[pointx][pointy] = 1
+            
+            pointx = pointx + 1
             i += 1    
 
         i = 0
         while(i < sideMeasure):
-            if(self.probability_noise() == 1):
-                self.random_point(size, self.background)
-            else:
-                self.background[pointx][pointy] = 1
-                pointy = pointy - 1
+            if (self.background[pointx][pointy] == 0):
+                if(self.probability_noise() == 1):
+                    self.random_point(size, self.background)
+                else:
+                    self.background[pointx][pointy] = 1
+            pointy = pointy - 1
             i += 1   
 
         i = 0
         while(i < sideMeasure):
-            if(self.probability_noise() == 1):
-                self.random_point(size, self.background)
-            else:
-                self.background[pointx][pointy] = 1
-                pointx = pointx - 1
+            if (self.background[pointx][pointy] == 0):
+                if(self.probability_noise() == 1):
+                    self.random_point(size, self.background)
+                else:
+                    self.background[pointx][pointy] = 1
+            pointx = pointx - 1
             i += 1    
 
         return self.background    
