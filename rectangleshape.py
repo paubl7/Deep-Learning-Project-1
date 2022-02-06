@@ -66,9 +66,9 @@ class rectangleshape:
             while (not center_found):
                 center = randint(low=int(lowSizeMeasure/2), high= size-int(bigSizeMeasure/2), size=2)
                 if((center[0] - int(wsize/2)) >= 0 and 
-                (center[0] + int(wsize/2)) <= size-2 and 
+                (center[0] + int(wsize/2)) < size-2 and 
                 (center[1] - int(hsize/2)-1) >= 0 and 
-                (center[1] + int(hsize/2)+1) <= size-2):
+                (center[1] + int(hsize/2)+1) < size-2):
                     break 
             
         pointx= center[0]-int(hsize/2)
@@ -96,7 +96,8 @@ class rectangleshape:
                     self.background[pointx][pointy] = 1
             pointx = pointx + 1
             i += 1    
-
+        if(pointx == 20):
+            pointx = 19
         i = 0
         while(i < wsize):
             if (self.background[pointx][pointy] == 0):
