@@ -9,7 +9,7 @@ def tanh(x):
     return (m.exp(x) - m.exp(-x))/(m.exp(x) + m.exp(-x))
 
 def relu(x):
-    return max(0,x)
+    return x * (x > 0)
 
 def linear(x):
     return x

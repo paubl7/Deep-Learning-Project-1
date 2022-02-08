@@ -7,7 +7,6 @@
 
 import os 
 import argparse
-from matplotlib.cbook import flatten
 import numpy as np
 from numpy import ndarray
 from squareshape import squareshape
@@ -94,7 +93,18 @@ class DataGenerator:
 
             if (self.visualize == 1):
                 self.visual.visualize_data_from_generator(self.visual, shape)
-        
+        path = os.path.join(self.dataSetDirectory, "train/answers.txt")
+        file = open(path, "w+")
+        file.write(str(self.answerstrain))
+
+        path = os.path.join(self.dataSetDirectory, "validation/answers.txt")
+        file = open(path, "w+")
+        file.write(str(self.answersvalidation))
+
+        path = os.path.join(self.dataSetDirectory, "test/answers.txt")
+        file = open(path, "w+")
+        file.write(str(self.answerstest))
+
         print("DATASET CREATED")
 
     #### PRIVATE FUNCTIONS ####
@@ -128,10 +138,10 @@ class DataGenerator:
     def __writedata(self, matrix, i, filepath1):
         filename = "shape"+str(i)+".txt"
         filepath = os.path.join(filepath1, filename)
-        image = "shape"+str(i)
-        imagepath = os.path.join(filepath1, image)
+        #image = "shape"+str(i)
+        #imagepath = os.path.join(filepath1, image)
         file = open(filepath, "w+")
-        self.visual.save_data_from_generator(self.visual, matrix, imagepath)
+        #self.visual.save_data_from_generator(self.visual, matrix, imagepath)
         if(not self.flatten):
             matrix = ndarray.flatten(matrix)
             file.write(np.array2string(matrix))
